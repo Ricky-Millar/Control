@@ -1,0 +1,558 @@
+
+%%TEMPLATE FOR PLOTTING LOADS OF LINES ONTOP OF EACHOTHER
+
+closedloopdampedKp0_01Kd0_001Ki0;
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'--r','LineWidth',3);
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'g','LineWidth',2);
+closedloopdampedKp0_01Kd0_01Ki0;
+plot(D(:,2),D(:,4)*360/16000,'b','LineWidth',2);
+closedloopdampedKp0_01Kd0_1Ki0;
+plot(D(:,2),D(:,4)*360/16000,'c','LineWidth',2);
+closedloopdampedKp0_01Kd0_004Ki0;
+plot(D(:,2),D(:,4)*360/16000,'m','LineWidth',2);
+
+
+
+legend('demand signal','Kd = 0.001','Kd = 0.01','Kd = 0.1','Kd = 0.004');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, Effects of Kp on StepResponse');
+saveas(f, 'Effects of Kd on StepResponse.fig');
+hold off;
+
+
+
+
+
+
+
+%%%
+% Torsional ECP 205 data processing and plotting
+%%%
+
+---------------------------------------------------------------------------------------------------------
+Torsional open loop
+---------------------------------------------------------------------------------------------------------
+
+%% read data from m-file, type just "filename"
+'openloop0.25v4000msx1';
+% plot results for Encoder 1 in counts converted to degrees vs time
+figure(1);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, PD Gains: k_p=0.02, k_d=0.02');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+%legend('demand signal','system respond','estimated angular velocity');
+for i=1:N-1
+    
+    omega(i)=(D(i+1,4)-D(i,4))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-');
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_e [deg/s]');
+title('Open-loop. Control input amplitude 0.25v');
+% Phase portrate representation
+figure(2);
+plot(D(:,4)*360/16000,omega(:),'b-');
+xlabel('Rotation angle \theta [deg]');
+ylabel('Estimated angular velocity \omega_e[deg/s]');
+grid on;
+title('Open-loop. Control input amplitude 0.25v');
+
+
+---------------------------------------------------------------------------------------------------------
+Torsional Position
+---------------------------------------------------------------------------------------------------------
+
+%% read data from m-file, type just "filename"
+closedloopdampedKp0_01Kd0_001Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f = figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'b');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop damped Kp0.01 Kd0.001 Ki0');
+saveas(f, 'Tort Pos closed loop damped Kp0.01 Kd0.001 Ki0.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+closedloopdampedKp0_01Kd0_01Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'b');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop damped Kp0.01 Kd0.01 Ki0');
+saveas(f, 'Tort Pos closed loop damped Kp0.01 Kd0.01 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+closedloopdampedKp0_01Kd0_1Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'b');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop damped Kp0.01 Kd0.1 Ki0');
+saveas(f, 'Tort Pos closed loop damped Kp0.01 Kd0.1 Ki0.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+closedloopdampedKp0_01Kd0_004Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'b');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop damped Kp0.01 Kd0.004 Ki0');
+saveas(f, 'Tort Pos closed loop damped Kp0.01 Kd0.004 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+closedloopKp00_05Kd0Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'m');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop Kp0.01 Kd0 Ki0');
+saveas(f, 'Tort Pos closed loop Kp0.01 Kd0 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+closedloopKp0_01Kd0Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'m');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop Kp0.02 Kd0 Ki0');
+saveas(f, 'Tort Pos closed loop Kp0.02 Kd0 Ki0.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+closedloopKp0_02Kd0Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'m');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop Kp0.005 Kd0 Ki0');
+saveas(f, 'Tort Pos closed loop Kp0.005 Kd0 Ki0.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+closedloopKp0_005Kd0Ki0;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'m');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, closed loop Kp0.05 Kd0 Ki0');
+saveas(f, 'Tort Pos closed loop Kp0.05 Kd0 Ki0.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+Proportionalfeedbackr01r10_004s10_01;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'g');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, Proportional feedback r0 1 r1 0.004 s1 0.01');
+saveas(f, 'Tort Pos Proportional feedback r0 1 r1 0.004 s1 0.01.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+Proportionalfeedbackr01r10_004s10_03;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'g');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, Proportional feedback r0 1 r1 0.004 s1 0.03');
+saveas(f, 'Tort Pos Proportional feedback r0 1 r1 0.004 s1 0.03.fig');
+
+hold off
+
+%% read data from m-file, type just "filename"
+Proportionalfeedbackr01r10_004s10_07;
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(3);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'g');
+legend('demand signal','system respond');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Position control \theta_{dem}=240 deg, Proportional feedback r0 1 r1 0.004 s1 0.07');
+saveas(f, 'Tort Pos Proportional feedback r0 1 r1 0.004 s1 0.07.fig');
+hold off
+--------------------
+
+
+---------------------------------------------------------------------------------------------------------
+Torsional speed
+---------------------------------------------------------------------------------------------------------
+
+
+%% read data from m-file, type just "filename"
+'closed loop damped Kp0.01 Kd0.001 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop damped Kp0.01 Kd0.001 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop damped Kp0.01 Kd0.01 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop damped Kp0.01 Kd0.01 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop damped Kp0.01 Kd0.1 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop damped Kp0.01 Kd0.1 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop damped Kp0.01 Kd0.004 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop damped Kp0.01 Kd0.004 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop Kp0.01 Kd0 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop Kp0.01 Kd0 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop Kp0.02 Kd0 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop Kp0.02 Kd0 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop Kp0.005 Kd0 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop Kp0.005 Kd0 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'closed loop Kp0.05 Kd0 Ki0';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed closed loop Kp0.05 Kd0 Ki0.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'Proportional feedback r0 1 r1 0.004 s1 0.01';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Gains: k_p=0.05, s filter standard');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed Proportional feedback r0 1 r1 0.004 s1 0.01.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'Proportional feedback r0 1 r1 0.004 s1 0.03';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Proportional feedback r0 1 r1 0.004 s1 0.03');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimated angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed Proportional feedback r0 1 r1 0.004 s1 0.03.fig');
+hold off
+
+
+%% read data from m-file, type just "filename"
+'Proportional feedback r0 1 r1 0.004 s1 0.07';
+% plot results for Encoder 1 in counts converted to degrees vs time
+f=figure(4);
+plot(D(:,2),D(:,3)*360/16000,'-r');
+hold on; grid on;
+plot(D(:,2),D(:,4)*360/16000,'-k');
+xlabel('Time [s]');
+ylabel('Rotation angle \theta [deg]');
+title('Speed control ramp: \theta_{dem}=360 deg, velocity=90 deg/s Proportional feedback r0 1 r1 0.004 s1 0.07');
+% calculation of angular velocity using finite difference method
+N=size(D(:,2)); omega=zeros(N);
+for i=1:N-1
+    
+    omega(i)=(D(i+1,3)-D(i,3))*360/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),omega(:),'b-')
+legend('demand signal \theta_{dem}','system respond \theta(t)','esimatedtortspeed  angular velocity \omega_{e} [deg/s]');
+saveas(f, 'tortspeed Proportional feedback r0 1 r1 0.004 s1 0.07.fig');
+hold off
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+Rectilinear open loop
+---------------------------------------------------------------------------------------------------------
+
+%% read data from m-file, type just "filename"
+FILENAME;
+% plot results for Encoder 1 in counts converted to mm vs time
+figure(5);
+plot(D(:,2),D(:,4)*2*pi*12/16000,'-k');
+hold on; grid on;
+xlabel('Time [s]');
+ylabel('Displacement x [mm]');
+title('Control input amplitude 1v');
+% calculation of linear velocity using finite difference method
+N=size(D(:,2)); v=zeros(N);
+for i=1:N-1
+    
+    v(i)=(D(i+1,4)-D(i,4))*2*pi*12/16000/(D(i+1,2)-D(i,2));
+end
+plot(D(:,2),0.1*v(:),'b-');
+legend('displacement x(t) [mm]','10% of estimated linear velocity v(t) [mm/s]');
+title('Control input amplitude 1v (in counts). Open loop system.');
+
+---------------------------------------------------------------------------------------------------------
+Rectilinear PD
+---------------------------------------------------------------------------------------------------------
+
+
+%% read data from m-file, type just "filename"
+FILENAME;
+% plot results for Encoder 1 in counts converted to mm vs time
+figure(6);
+plot(D(:,2),D(:,4)*2*pi*12/16000,'-k'); % system displacement [mm]
+hold on; grid on;
+plot(D(:,2),D(:,3)*2*pi*12/16000,'-r')  % demand signal [mm]
+xlabel('Time [s]');
+ylabel('Displacement x [mm]');
+title('Control input amplitude 1v (in counts). PID Gains: k_p=0.02., k_d=0.002');
+legend('system displacement x(t) [mm]',' demand signal [mm]');
+
+---------------------------------------------------------------------------------------------------------
+Rectilinear PID
+---------------------------------------------------------------------------------------------------------
+
+%% read data from m-file, type just "filename"
+FILENAME;
+% plot results for Encoder 1 in counts converted to mm vs time
+figure(7);
+plot(D(:,2),D(:,4)*2*pi*12/16000,'-k'); % system displacement [mm]
+hold on; grid on;
+plot(D(:,2),D(:,3)*2*pi*12/16000,'-r')  % demand signal [mm]
+xlabel('Time [s]');
+ylabel('Displacement x [mm]');
+title('Control input amplitude 1v (in counts). PID Gains: k_p=0.06, k_d=0.004, k_i=0.2 ');
+legend('system displacement x(t) [mm]',' demand signal [mm]');
